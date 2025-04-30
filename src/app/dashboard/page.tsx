@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { IoTrashBin } from 'react-icons/io5';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { CiEdit } from 'react-icons/ci';
 
 interface Employee {
   employeeId: number;
@@ -118,7 +119,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Searchbar + Add Button Skeleton */}
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:px-2">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:px-2 md:py-8">
           <div className="h-10 w-full animate-pulse rounded-full bg-gray-300 md:w-4/5" />
           <div className="h-10 w-full animate-pulse rounded bg-gray-300 md:w-40" />
         </div>
@@ -131,34 +132,34 @@ export default function DashboardPage() {
         </div>
 
         {/* Table Skeleton For Desktop */}
-        <div className="m-2 hidden flex-col items-center justify-center overflow-x-auto rounded-md md:flex">
-          <table className="min-w-full">
+        <div className="mx-auto hidden w-full flex-grow md:flex md:w-[92%] md:overflow-hidden">
+          <table className="min-w-full table-auto">
             <thead>
               <tr className="bg-gray-200 text-sm tracking-wide text-gray-600 uppercase">
-                <th className="p-6 text-left">No</th>
-                <th className="p-6 text-left">Full Name</th>
-                <th className="p-6 text-left">Telephone</th>
-                <th className="p-6 text-left">Position</th>
-                <th className="p-6 text-left"></th>
+                <th className="py-4 pl-[60px]">No</th>
+                <th className="py-3">Full Name</th>
+                <th className="py-3">Telephone</th>
+                <th className="py-3">Position</th>
+                <th className="py-3 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 text-black">
+            <tbody className="text-md divide-y divide-gray-200 text-black">
               {Array.from({ length: 5 }).map((_, idx) => (
                 <tr key={idx}>
-                  <td className="p-6">
+                  <td className="py-4 pl-[60px]">
                     <div className="h-4 w-6 animate-pulse rounded bg-gray-300" />
                   </td>
-                  <td className="p-6">
+                  <td className="py-3">
+                    <div className="h-4 w-28 animate-pulse rounded bg-gray-300" />
+                  </td>
+                  <td className="py-3">
                     <div className="h-4 w-24 animate-pulse rounded bg-gray-300" />
                   </td>
-                  <td className="p-6">
-                    <div className="h-4 w-20 animate-pulse rounded bg-gray-300" />
+                  <td className="py-3">
+                    <div className="h-4 w-24 animate-pulse rounded bg-gray-300" />
                   </td>
-                  <td className="p-6">
-                    <div className="h-4 w-20 animate-pulse rounded bg-gray-300" />
-                  </td>
-                  <td className="p-6">
-                    <div className="ml-auto h-4 w-16 animate-pulse rounded bg-gray-300" />
+                  <td className="py-3 text-center">
+                    <div className="mx-auto h-4 w-16 animate-pulse rounded bg-gray-300" />
                   </td>
                 </tr>
               ))}
@@ -183,10 +184,10 @@ export default function DashboardPage() {
       </header>
 
       {/* Searchbar and Add */}
-      <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:px-2 md:py-8">
+      <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-center md:px-2 md:py-8">
         <input
           type="text"
-          placeholder="🔍 Search employee ..."
+          placeholder="🔍   Search employee ..."
           value={searchBar}
           onChange={(e) => {
             setSearchBar(e.target.value);
@@ -196,7 +197,7 @@ export default function DashboardPage() {
         />
         <button
           onClick={handleCreate}
-          className="w-full rounded bg-yellow-300 px-6 py-2 font-bold text-black transition hover:bg-yellow-200 md:w-auto"
+          className="w-full rounded bg-yellow-300 px-6 py-2 font-bold text-black transition hover:bg-yellow-200 md:ml-12 md:w-auto"
         >
           Add Employee
         </button>
@@ -226,11 +227,20 @@ export default function DashboardPage() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  handleEdit(emp.employeeId);
+                }}
+                className="cursor-pointer text-2xl text-blue-500"
+              >
+                <CiEdit />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
                   onDeleteClick(emp.employeeId);
                 }}
-                className="text-red-500"
+                className="cursor-pointer text-2xl text-red-500"
               >
-                <IoTrashBin />
+                <RiDeleteBinLine />
               </button>
             </div>
           </div>
@@ -238,15 +248,15 @@ export default function DashboardPage() {
       </div>
 
       {/* Table For Desktop */}
-      <div className="m-2 hidden flex-col items-center justify-center overflow-x-auto rounded-xl bg-white shadow-md md:flex md:overflow-hidden">
-        <table className="min-w-full">
+      <div className="mx-auto hidden w-full flex-grow rounded-xl bg-white shadow-md md:flex md:w-[92%] md:overflow-hidden">
+        <table className="min-w-full table-auto">
           <thead>
-            <tr className="bg-gray-200 text-sm tracking-wide text-gray-600 uppercase">
-              <th className="p-6 text-left">No</th>
-              <th className="p-6 text-left">Full Name</th>
-              <th className="p-6 text-left">Telephone</th>
-              <th className="p-6 text-left">Position</th>
-              <th className="p-6 text-left"></th>
+            <tr className="bg-gray-200 text-left text-sm tracking-wide text-gray-600 uppercase">
+              <th className="py-6 pl-15">No</th>
+              <th className="py-3">Full Name</th>
+              <th className="py-3">Telephone</th>
+              <th className="py-3">Position</th>
+              <th className="py-3 text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="text-md divide-y divide-gray-200 text-black">
@@ -254,18 +264,27 @@ export default function DashboardPage() {
               <tr
                 key={emp.employeeId}
                 onClick={() => handleEdit(emp.employeeId)}
-                className="cursor-pointer transition-colors hover:bg-gray-200 hover:text-black"
+                className="cursor-pointer transition-colors hover:bg-gray-200"
               >
-                <td className="p-6">{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                <td className="p-6 font-medium">{emp.fullname}</td>
-                <td className="p-6">{emp.telNo || '-'}</td>
-                <td className="p-6">{emp.positionName}</td>
-                <td className="flex justify-end gap-4 p-6" onClick={(e) => e.stopPropagation()}>
+                <td className="py-6 pl-15">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                <td className="py-3 font-medium">{emp.fullname}</td>
+                <td className="py-3">{emp.telNo || '-'}</td>
+                <td className="py-3">{emp.positionName}</td>
+                <td className="flex justify-center gap-6 py-6" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEdit(emp.employeeId);
+                    }}
+                    className="cursor-pointer text-2xl text-blue-500 transition hover:text-blue-700"
+                  >
+                    <CiEdit />
+                  </button>
                   <button
                     onClick={() => onDeleteClick(emp.employeeId)}
-                    className="cursor-pointer text-red-500 hover:underline"
+                    className="cursor-pointer text-2xl text-red-500 transition hover:text-red-700"
                   >
-                    <IoTrashBin />
+                    <RiDeleteBinLine />
                   </button>
                 </td>
               </tr>
@@ -276,7 +295,7 @@ export default function DashboardPage() {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="mt-8 flex items-center justify-center gap-2">
+        <div className="mt-4 flex cursor-pointer items-center justify-center gap-2">
           {/* Prev Button */}
           <button
             disabled={currentPage === 1}
@@ -295,7 +314,7 @@ export default function DashboardPage() {
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`rounded px-3 py-1 ${
+              className={`cursor-pointer rounded px-3 py-1 ${
                 currentPage === page
                   ? 'bg-purple-600 text-white'
                   : 'bg-white text-black hover:bg-gray-200'
@@ -309,7 +328,7 @@ export default function DashboardPage() {
           <button
             disabled={currentPage === totalPages}
             onClick={() => handlePageChange(currentPage + 1)}
-            className={`rounded px-3 py-1 ${
+            className={`cursor-pointer rounded px-3 py-1 ${
               currentPage === totalPages
                 ? 'cursor-not-allowed bg-gray-400 text-white'
                 : 'bg-white text-black hover:bg-yellow-200'
